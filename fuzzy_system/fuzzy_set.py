@@ -43,10 +43,6 @@ class FuzzySet:
 	def empty(self):
 		return np.all(self._membership_degree_list == 0)
 
-	@property
-	def name(self):
-		return self._name
-
 	@classmethod
 	def create_trapezoidal(cls, name, domain_min, domain_max, res, a, b, c, d):
 		t1fs = cls(name, domain_min, domain_max, res)

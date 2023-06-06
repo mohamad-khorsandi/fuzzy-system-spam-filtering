@@ -112,7 +112,7 @@ class FuzzySystem:
 
 	def add_rule(self, antecedent_clauses, consequent_clauses):
 		'''
-		adds a new rule to the system.
+		adds a new rulpasse to the system.
 		TODO: add checks
 
 		Arguments:

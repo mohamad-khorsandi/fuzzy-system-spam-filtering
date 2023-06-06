@@ -31,8 +31,6 @@ def main():
     print(pd.DataFrame(records_selection, columns=feature_name_selection).head())
 
 
-
-
 if __name__ == '__main__':
     main()
 
