@@ -2,7 +2,7 @@ import FuzzySet
 import matplotlib.pyplot as plt
 
 
-class FuzzyVariable():
+class FuzzyVariable:
     def __init__(self, name, min_val, max_val, res):
         self._sets = {}
         self._max_val = max_val
@@ -23,6 +23,7 @@ class FuzzyVariable():
         return self._sets[name]
 
     def add_triangular(self, name, low, mid, high):
+
         new_set = FuzzySet.create_triangular(name, self._min_val, self._max_val, self._res, low, mid, high)
         self._add_set(name, new_set)
         return new_set
@@ -51,3 +52,8 @@ class FuzzyVariable():
 
         if show:
             plt.show()
+
+
+if __name__ == "__main__":
+    f = FuzzyVariable('test', 1, 100, 100)
+
