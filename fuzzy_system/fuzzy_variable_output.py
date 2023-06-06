@@ -1,6 +1,5 @@
-import FuzzyVariable
-import FuzzySet
-
+from .fuzzy_variable import FuzzyVariable
+from .fuzzy_set import FuzzySet
 
 class FuzzyOutputVariable(FuzzyVariable):
 
