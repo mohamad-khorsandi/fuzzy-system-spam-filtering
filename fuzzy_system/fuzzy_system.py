@@ -73,6 +73,8 @@ class FuzzySystem:
 
 	def add_output_variable(self, variable):
 		self._output_variables[variable.name] = variable
+		print('salamm')
+		print(self._output_variables[variable.name])
 
 
 	def get_input_variable(self, name):
@@ -135,7 +137,11 @@ class FuzzySystem:
 		for var_name, set_name in consequent_clauses.items():
 			var = self.get_output_variable(var_name)
 			f_set = var.get_set(set_name)
+			print(f'var: {var}')
+			print(f_set)
 			new_rule.add_consequent_clause(var, f_set)
+			print('salam')
+			print(new_rule)
 
 		# add the new rule
 		self._rules.append(new_rule)

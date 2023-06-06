@@ -5,6 +5,11 @@ class FuzzyOutputVariable(FuzzyVariable):
 
     def __init__(self, name, min_val, max_val, res):
         super().__init__(name, min_val, max_val, res)
+        print('ini')
+        print(name)
+        print(min_val)
+        print(max_val)
+        print(res)
         self._output_distribution = FuzzySet(name, min_val, max_val, res)
 
     def clear_output_distribution(self):

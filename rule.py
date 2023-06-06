@@ -1,5 +1,7 @@
 from enum import Enum
 
+from .clause import Clause
+
 
 class Result(Enum):
     SPAM = 1
@@ -7,8 +9,8 @@ class Result(Enum):
 
 
 class Rule:
-    def __init__(self, feature_extractor):
-        self._clause_list = list()
+    def __init__(self):
+        self._clause_list = list[Clause]
         self._result: Result
         self._lock = False
         self._fitness = float()
@@ -23,6 +25,12 @@ class Rule:
 
     def _cal_fitness(self):
         pass
+
+    def matching_rate(self, x):  # ToDo how to match in input with clause
+        gR = 1
+        for i, clause in enumerate(self._clause_list):
+            gR *= clause.fuzzy_set.mem_func(x[i])
+        return gR
 
     def copy(self):
         pass
