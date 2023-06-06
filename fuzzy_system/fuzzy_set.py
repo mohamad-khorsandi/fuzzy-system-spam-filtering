@@ -123,7 +123,7 @@ class FuzzySet:
 
 	def plot_set(self, ax, col=''):
 		ax.plot(self._domain, self._dom, col)
-		ax.set_ylim([-0.1,1.1])
+		ax.set_ylim([-0.1, 1.1])
 		ax.set_title(self._name)
 		ax.grid(True, which='both', alpha=0.4)
 		ax.set(xlabel='x', ylabel='$\mu(x)$')

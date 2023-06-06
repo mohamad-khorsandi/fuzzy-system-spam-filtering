@@ -23,8 +23,18 @@ class Rule:
         self._lock = True
         return self._fitness
 
-    def _cal_fitness(self):
-        pass
+    def _cal_fitness(self, input_list , lables):
+        positive = 0
+        negitive = 0
+        for i in range(len(input_list)):
+            if lables[i] == self._result:
+                positive += self.matching_rate(input_list[i])
+            else:
+                negitive += self.matching_rate(input_list[i])
+
+        CF = (positive - negitive)/(positive + negitive)
+
+        return CF
 
     def matching_rate(self, x):  # ToDo how to match in input with clause
         gR = 1
