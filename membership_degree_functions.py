@@ -11,7 +11,7 @@ def create_trapezium(self, x):
     return res
 
 
-def create_gaussuan(self, x):
+def create_gaussian(self, x):
     res = np.exp((-1 / 2) * ((x - self.m) / self.s) ^ 2)
     return res
 

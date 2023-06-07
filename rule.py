@@ -1,6 +1,8 @@
+import random
 from enum import Enum
 
-from .clause import Clause
+import main
+from clause import Clause
 
 
 class Result(Enum):
@@ -10,10 +12,10 @@ class Result(Enum):
 
 class Rule:
     def __init__(self):
-        self._clause_list = list[Clause]
+        self._clause_list: list[Clause]
         self._result: Result
         self._lock = False
-        self._fitness = float()
+        self._fitness: float()
 
     def get_fitness(self):
         if self._lock:
@@ -25,29 +27,38 @@ class Rule:
 
     def _cal_fitness(self, input_list , lables):
         positive = 0
-        negitive = 0
+        negative = 0
         for i in range(len(input_list)):
             if lables[i] == self._result:
                 positive += self.matching_rate(input_list[i])
             else:
-                negitive += self.matching_rate(input_list[i])
+                negative += self.matching_rate(input_list[i])
 
-        CF = (positive - negitive)/(positive + negitive)
+        CF = (positive - negative)/(positive + negative)
 
         return CF
 
     def matching_rate(self, x):  # ToDo how to match in input with clause
         gR = 1
-        for i, clause in enumerate(self._clause_list):
-            gR *= clause.fuzzy_set.mem_func(x[i])
+        for clause in self._clause_list:
+            gR *= clause.fuzzy_set.mem_func(x[clause.index])
         return gR
 
     def copy(self):
         pass
 
     @classmethod
-    def get_random_chromosome(cls):
-        pass
+    def get_random_chromosome(cls): # todo add some hioristic to random init
+        main.main()
+        clause_count = random.randint(1, 5)
+        for i in range(clause_count):
+            feature_index_list = random.sample(list(main.Features), k=clause_count)
+            for i in range(feature_index_list):
+                clause = Clause()
+                clause.
 
     def show(self):
         pass
+
+if __name__ == '__main__':
+    Rule.get_random_chromosome()

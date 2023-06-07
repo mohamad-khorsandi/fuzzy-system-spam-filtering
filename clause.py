@@ -1,4 +1,4 @@
-from fuzzy_system.fuzzy_set import FuzzySet
+from fuzzy_set import FuzzySet
 from fuzzy_variable import FuzzyVariable
 
 
@@ -7,3 +7,4 @@ class Clause:
         self.is_not = False
         self.variable: FuzzyVariable
         self.fuzzy_set: FuzzySet
+        self.index: int
