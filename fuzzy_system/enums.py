@@ -17,3 +17,9 @@ class Features(Enum):
 class Result(Enum):
     SPAM = 1
     NOT_SPAM = 0
+
+
+class TermName(Enum):
+    LOW = 0
+    MEDIUM = 1
+    HIGH = 2

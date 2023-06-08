@@ -11,8 +11,7 @@ from fuzzy_system.rule import Rule
 
 
 class EvolutionaryAlgorithm:
-    def __init__(self, iteration, population_size, parent_pool_size, p_rec, p_mut, fuzzyset_init_rate,
-                 fuzzyset_init_sigma, features, labels):
+    def __init__(self, iteration, population_size, parent_pool_size, p_rec, p_mut, mut_step):
         assert parent_pool_size <= population_size
         assert parent_pool_size % 2 == 0
 
@@ -21,18 +20,13 @@ class EvolutionaryAlgorithm:
         self.parent_pool_size = parent_pool_size
         self.p_rec = p_rec
         self.p_mut = p_mut
+        self.mut_step = mut_step
         self.population = list()
-        self.fuzzyset_init_rate = fuzzyset_init_rate
-        self.fuzzyset_init_sigma = fuzzyset_init_sigma
 
         self.gen_rand_population()
         self.fitness_hist = list()
         self.best_hist = list()
         self.duration = float()
-        self.searched_arcs = list()
-
-        self.features = features
-        self.labels = labels
 
         self.res_dir = 'res_dir'
         dir_exists = os.path.exists(self.res_dir)
@@ -43,18 +37,16 @@ class EvolutionaryAlgorithm:
     def run(self):
         start = time.time()
         for i in range(self.iteration):
-            print('epoch----------------------', i)
-            self.recode_statistics()
-            parent_pool = parent_selection(self.population, self.parent_pool_size, self.features, self.labels)
+            self.recode_statistics(i)
+            parent_pool = parent_selection(self.population, self.parent_pool_size)
             children = []
 
             for j in range(0, self.parent_pool_size - 1, 2):
                 p1, p2 = parent_pool[j], parent_pool[j + 1]
                 for rec_result in recombination(p1, p2, self.p_rec):
-                    mut_result = mutation(rec_result, self.p_mut)
+                    mut_result = mutation(rec_result, self.p_mut, self.mut_step)
                     children.append(mut_result)
 
-            print('\npopulation')
             self.survival_selection(children)
 
         end = time.time()
@@ -62,18 +54,19 @@ class EvolutionaryAlgorithm:
 
     def gen_rand_population(self):
         for i in range(self.population_size):
-            rand_chrom = Rule.get_random_chromosome(self.fuzzyset_init_rate, self.fuzzyset_init_sigma)
+            rand_chrom = Rule.random_rule()
             self.population.append(rand_chrom)
 
-    def recode_statistics(self):
-        all_fitness = np.array([c.get_fitness(self.features, self.labels) for c in self.population])
+    def recode_statistics(self, i):
+        print('epoch----------------------', i)
+        all_fitness = np.array([c.get_fitness() for c in self.population])
         self.fitness_hist.append(np.mean(all_fitness))
         self.best_hist.append(self.population[all_fitness.argmax()])
         self.population[all_fitness.argmax()].show()
 
     def survival_selection(self, children):
         tmp_list = self.population + children
-        tmp_list.sort(key=lambda x: x.get_fitness(self.features, self.labels))
+        tmp_list.sort(key=lambda x: x.get_fitness())
         tmp_list = tmp_list[len(children):]
 
         random.shuffle(tmp_list)
@@ -83,10 +76,12 @@ class EvolutionaryAlgorithm:
         print("total time of running algorithm: " + str(self.duration))
         plt.clf()
         plt.plot(range(self.iteration), self.fitness_hist, color='b')
-        plt.plot(range(self.iteration), [c.get_fitness(self.features, self.labels) for c in self.best_hist], color='r')
+        plt.plot(range(self.iteration), [c.get_fitness() for c in self.best_hist], color='r')
         plt.savefig(self.res_dir + '/' + 'total.png')
 
-        print('best arc:')
+        print('last generation')
+        for rule in self.population:
+            rule.show()
         self.best_hist[self.iteration - 1].show()
 
 

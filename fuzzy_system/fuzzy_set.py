@@ -1,13 +1,14 @@
-import numpy as np
-from fuzzy_system.membership_degree_functions import create_sigmoid, create_trapezium, create_gaussian, create_triangular
+import random
+from fuzzy_system.membership_functions import calculate_sigmoid, calculate_trapezium, calculate_gaussian, \
+    calculate_triangular
 
 
 class FuzzySet:
-    def __init__(self, is_not, m, s):
-        self._is_not = is_not
+    def __init__(self, m, s):
         self._s = s
         self._m = m
-        self._mem_func = None
+        self._membership_function = None
+        self.name = None
 
     def get_m(self):
         return self._m
@@ -15,39 +16,49 @@ class FuzzySet:
     def get_s(self):
         return self._s
 
-    def calculate_mem_degree(self, x):
-        return self._mem_func(x)
+    def membership_function(self, x):
+        return self._membership_function(x, m=self._m, s=self._s)
 
     @classmethod
-    def get_triangular(cls, is_not, m, s):
-        f_set = FuzzySet(is_not, m, s)
-        f_set.mem_func = create_triangular
+    def create_random(cls, m, s):
+        constructor_function = random.choice(fuzzy_set_constructor_functions)
+        return constructor_function(m, s)
+
+    @classmethod
+    def create_triangular(cls, m, s):
+        f_set = FuzzySet(m, s)
+        f_set._membership_function = calculate_triangular
         return f_set
 
     @classmethod
-    def get_gaussian(cls, is_not, m, s):
-        f_set = FuzzySet(is_not, m, s)
-        f_set.mem_func = create_gaussian
+    def create_gaussian(cls, m, s):
+        f_set = FuzzySet(m, s)
+        f_set._membership_function = calculate_gaussian
         return f_set
 
     @classmethod
-    def get_trapezium(cls, is_not, m, s):
-        f_set = FuzzySet(is_not, m, s)
-        f_set.mem_func = create_trapezium
+    def create_trapezium(cls, m, s):
+        f_set = FuzzySet(m, s)
+        f_set._membership_function = calculate_trapezium
         return f_set
 
     @classmethod
-    def get_sigmoid(cls, is_not, m, s):
-        f_set = FuzzySet(is_not, m, s)
-        f_set.mem_func = create_sigmoid
+    def create_sigmoid(cls, m, s):
+        f_set = FuzzySet(m, s)
+        f_set._membership_function = calculate_sigmoid
         return f_set
 
-    # def cog_defuzzify(self):
-    #     num = np.sum(np.multiply(self._dom, self._domain))
-    #     den = np.sum(self._dom)
-    #     print(num)
-    #     print(den)
+    def copy(self):
+        fuzzyset = FuzzySet(m=self._m, s=self._s)
+        fuzzyset._membership_function = self._membership_function
+        return fuzzyset
+
+    def plot(self, ax):
+        pass
+        # plt.xlim(0, 2*np.pi)
 
 
-fuzzy_set_constructor_functions = [FuzzySet.get_triangular, FuzzySet.get_trapezium, FuzzySet.get_sigmoid,
-                                   FuzzySet.get_gaussian]
+fuzzy_set_constructor_functions = [FuzzySet.create_triangular,
+                                   FuzzySet.create_trapezium,
+                                   FuzzySet.create_sigmoid,
+                                   FuzzySet.create_gaussian]
