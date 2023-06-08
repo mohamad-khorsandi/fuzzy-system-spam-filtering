@@ -20,6 +20,12 @@ class Rule:
         self._lock = True
         return self._fitness
 
+    def add_clause(self, clause):
+        self._clause_list.append(clause)
+
+    def set_result(self, result):
+        self._result = result
+
     def _cal_fitness(self, features, labels):
         positive = 0
         negative = 0
@@ -36,8 +42,9 @@ class Rule:
     def matching_rate(self, x):  # ToDo how to match in input with clause
         gR = 1
         for clause in self._clause_list:
-            gR *= clause.fuzzy_set.mem_func(x[clause.variable.corresponding_feature.index], clause.fuzzy_set.m,
-                                            clause.fuzzy_set.s)
+            gR *= clause.calculate_matching_rate(x[clause.get_feature().index],
+                                                 clause.fuzzy_set.get_m(),
+                                                 clause.fuzzy_set.get_s())
         return gR
 
     def copy(self):
@@ -51,11 +58,11 @@ class Rule:
         for feature in feature_list:
             fuzzy_variable = FuzzyVariable.get_random_fuzzy_variable(feature, fuzzyset_init_rate,
                                                                      fuzzyset_init_sigma)
-            fuzzy_set = random.choice(fuzzy_variable.possible_fuzzysets)
+            fuzzy_set = fuzzy_variable.get_random_possible_fuzzyset()
             clause = Clause(fuzzy_variable, fuzzy_set)
-            rule._clause_list.append(clause)
+            rule.add_clause(clause)
 
-        rule._result = random.choice(list(Result))
+        rule.set_result(random.choice(list(Result)))
         return rule
 
     def show(self):

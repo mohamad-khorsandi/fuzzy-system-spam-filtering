@@ -4,10 +4,19 @@ from fuzzy_system.membership_degree_functions import create_sigmoid, create_trap
 
 class FuzzySet:
     def __init__(self, is_not, m, s):
-        self.is_not = is_not
-        self.s = s
-        self.m = m
-        self.mem_func = None
+        self._is_not = is_not
+        self._s = s
+        self._m = m
+        self._mem_func = None
+
+    def get_m(self):
+        return self._m
+
+    def get_s(self):
+        return self._s
+
+    def calculate_mem_degree(self, x):
+        return self._mem_func(x)
 
     @classmethod
     def get_triangular(cls, is_not, m, s):

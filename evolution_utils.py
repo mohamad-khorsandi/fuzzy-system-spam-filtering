@@ -6,8 +6,8 @@ def parent_selection(generation, count, features, labels):
     return choices(generation, prob_list, k=count)
 
 
-def mutation(parent, p_mut):
-    pass
+def mutation(parent, p_mut, mut_step):
+
 
 
 def recombination(p1, p2, p_rec):
