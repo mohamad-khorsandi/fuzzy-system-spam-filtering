@@ -1,5 +1,6 @@
 from fuzzy_system import fuzzy_system_config
 from evolutionary_algorithm import EvolutionaryAlgorithm
+from fuzzy_system.rule import Rule, LinguisticVariable
 from preprocess_utils import get_data
 
 

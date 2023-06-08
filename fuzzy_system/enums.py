@@ -23,3 +23,13 @@ class TermName(Enum):
     LOW = 0
     MEDIUM = 1
     HIGH = 2
+
+
+class LinguisticTerms(Enum):
+    POSITIVE_LOW = 0
+    POSITIVE_MEDIUM = 1
+    POSITIVE_HIGH = 2
+
+    NEGATIVE_LOW = 3
+    NEGATIVE_MEDIUM = 4
+    NEGATIVE_HIGH = 5

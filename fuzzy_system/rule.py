@@ -77,6 +77,6 @@ class Rule:
         rule.set_result(random.choice(list(Result)))
         return rule
 
-    def show(self):
-        pass
+    def __str__(self):
+
 
