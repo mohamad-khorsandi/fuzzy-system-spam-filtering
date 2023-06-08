@@ -24,7 +24,7 @@ class Rule:
         positive = 0
         negative = 0
         for i in range(len(features)):
-            if labels[i] == self._result:
+            if labels[i] == self._result.value:
                 positive += self.matching_rate(features[i])
             else:
                 negative += self.matching_rate(features[i])
