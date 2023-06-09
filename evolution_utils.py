@@ -1,6 +1,7 @@
 import random
 from random import choices
 
+from fuzzy_system.clause import Clause
 from fuzzy_system.enums import Result
 from fuzzy_system.rule import Rule
 
@@ -28,6 +29,8 @@ def mutation(parent: Rule, p_mut, mut_step):
         clause_count = Rule.random_clause_count()
 
     for i in range(clause_count):
+        clause = Clause()
+        c.add_clause()
 
 
 

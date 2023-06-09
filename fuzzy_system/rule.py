@@ -1,9 +1,8 @@
-import math
 import random
 
 from fuzzy_system.clause import Clause
 from fuzzy_system.enums import Result, Features
-from fuzzy_system import fuzzy_system_config
+import config
 
 
 class Rule:
