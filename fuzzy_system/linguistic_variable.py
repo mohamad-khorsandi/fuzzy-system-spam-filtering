@@ -9,8 +9,6 @@ from fuzzy_system.fuzzy_set import FuzzySet
 class LinguisticVariable:
     def __init__(self, corresponding_feature):
         self.corresponding_feature = corresponding_feature
-        self._linguistic_terms: list[SignedTerms]
-        self._linguistic_terms = list()
         self._fuzzy_sets = list()
 
     def get_random_m(self, s):
@@ -29,17 +27,14 @@ class LinguisticVariable:
             fuzzyset = FuzzySet.random_fuzzyset(term=term, l_bound=l_bound, center=cen, u_bound=u_bound)
             linguistic_variable._fuzzy_sets.append(fuzzyset)
 
-        linguistic_variable._linguistic_terms = random.sample(list(SignedTerms), k=random.randint(3, 5))
         return linguistic_variable
 
-    def get_one_of_terms(self):
-        return random.choice(self._linguistic_terms)
+    @classmethod
+    def get_random_signed_term(cls):
+        return random.choice(list(SignedTerms))
 
     def copy(self):
         var = LinguisticVariable(self.corresponding_feature)
-        for term in self._linguistic_terms:
-            assert type(term) == SignedTerms
-            var._linguistic_terms.append(term)
 
         for f_set in self._fuzzy_sets:
             var._fuzzy_sets.append(f_set)
@@ -60,4 +55,7 @@ class LinguisticVariable:
         raise Exception()
 
     def mut(self):
-
+        var = LinguisticVariable(self.corresponding_feature)
+        for f_set in self._fuzzy_sets:
+            var._fuzzy_sets.append(f_set.mut())
+        return var

@@ -21,7 +21,7 @@ class Rule:
 
         return self._fitness
 
-    def add_clause(self, clause: object) -> object:
+    def add_clause(self, clause):
         self._clause_list.append(clause)
 
     def set_result(self, result):
@@ -36,8 +36,8 @@ class Rule:
     def _cal_fitness(self):
         positive = 0
         negative = 0
-        X = fuzzy_system_config.X
-        Y = fuzzy_system_config.Y
+        X = config.X
+        Y = config.Y
         for i in range(len(X)):
             if Y[i] == self._result.label:
                 positive += self.matching_rate(X[i])
@@ -65,7 +65,7 @@ class Rule:
         return new_rule
 
     @classmethod
-    def random_rule(cls):  # todo add some hioristic to random init
+    def random_rule(cls):
         rule = Rule()
         clause_count = Rule.random_clause_count()
         feature_list = random.sample(list(Features), k=clause_count)
@@ -88,5 +88,16 @@ class Rule:
     def random_clause_count(cls):
         return random.randint(1, 5)
 
-    def get_clause_list(self):
-        return self._clause_list
+    def has_feature(self, f):
+        for c in self._clause_list:
+            if c.get_feature() == f:
+                print(c.get_feature, f)
+                return c, True
+
+        return None, False
+
+    def clause_len(self):
+        return len(self._clause_list)
+
+    def get_copy_of_random_clause(self):
+        return random.choice(self._clause_list).copy()
