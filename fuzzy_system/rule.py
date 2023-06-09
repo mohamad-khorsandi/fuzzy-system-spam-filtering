@@ -102,6 +102,9 @@ class Rule:
     def get_copy_of_random_clause(self):
         return random.choice(self._clause_list).copy()
 
-    def get_clause_list(self):
-        return self._clause_list
+    def search_feature_in_rule(rule, feature_index):
+        for clause in rule._clause_list:
+            if clause.get_feature_index() == feature_index:
+                return clause.copy()
+        return None
 
