@@ -19,8 +19,8 @@ class LinguisticVariable:
         linguistic_variable = LinguisticVariable(feature)
 
         unit = (feature.max_value - feature.min_value) / 6
-        for i in [1, 3, 5]:
-            term = list(SimpleTerms)[i]
+        for counter, i in enumerate([1, 3, 5]):
+            term = list(SimpleTerms)[counter]
             l_bound = (i - 1) * unit
             cen = i * unit
             u_bound = (i + 1) * unit

@@ -11,7 +11,7 @@ from fuzzy_system.rule import Rule
 
 
 class EvolutionaryAlgorithm:
-    def __init__(self, iteration, population_size, parent_pool_size, p_rec, p_increase_rate_rec, p_mut, mut_step):
+    def __init__(self, iteration, population_size, parent_pool_size, p_rec, p_mut, mut_step):
         assert parent_pool_size <= population_size
         assert parent_pool_size % 2 == 0
 
@@ -19,7 +19,6 @@ class EvolutionaryAlgorithm:
         self.population_size = population_size
         self.parent_pool_size = parent_pool_size
         self.p_rec = p_rec
-        self.p_increase_rate_rec = p_increase_rate_rec
         self.p_mut = p_mut
         self.mut_step = mut_step
         self.population = list()
@@ -45,7 +44,7 @@ class EvolutionaryAlgorithm:
             for j in range(0, self.parent_pool_size - 1, 2):
                 p1, p2 = parent_pool[j], parent_pool[j + 1]
                 for rec_result in recombination(p1, p2, self.p_rec):
-                    mut_result = mutation(rec_result, self.p_mut, self.mut_step)
+                    mut_result = mutation(rec_result, self.p_mut)
                     children.append(mut_result)
 
             self.survival_selection(children)

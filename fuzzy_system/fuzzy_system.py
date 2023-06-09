@@ -1,7 +1,7 @@
 from sklearn.metrics import accuracy_score
 
-from enums import Result
-from rule import Rule
+from fuzzy_system.enums import Result
+from fuzzy_system.rule import Rule
 
 
 class FuzzySystem:

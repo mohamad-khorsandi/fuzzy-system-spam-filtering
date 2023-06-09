@@ -3,8 +3,8 @@ import numpy as np
 
 import config
 from config import neg_initial_overlap_rate, sigma_for_changing_s
-from evolution_utils import bool_rand
 from fuzzy_system.membership_functions import membership_function_list
+from randomutil import bool_rand
 
 
 class FuzzySet:

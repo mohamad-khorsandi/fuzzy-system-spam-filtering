@@ -1,9 +1,9 @@
 import random
 
 import config
-from evolution_utils import bool_rand
 from fuzzy_system.enums import SignedTerms
 from fuzzy_system.linguistic_variable import LinguisticVariable
+from randomutil import bool_rand
 
 
 class Clause:

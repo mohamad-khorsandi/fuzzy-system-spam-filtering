@@ -36,8 +36,8 @@ class Rule:
     def _cal_fitness(self):
         positive = 0
         negative = 0
-        X = config.X
-        Y = config.Y
+        X = config.train_X
+        Y = config.train_Y
         for i in range(len(X)):
             if Y[i] == self._result.label:
                 positive += self.matching_rate(X[i])
