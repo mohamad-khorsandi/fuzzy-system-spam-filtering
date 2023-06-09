@@ -8,7 +8,6 @@ class Clause:
     def __init__(self, var, term):
         self._linguistic_variable = var
         self._linguistic_term: SignedTerms
-        assert type(term) == SignedTerms
         self._signed_linguistic_term = term
 
     def get_feature_index(self):
@@ -34,6 +33,9 @@ class Clause:
         assert type(self._signed_linguistic_term) == SignedTerms
         term = self._signed_linguistic_term
         return Clause(var=var, term=term)
+
+    # def mut_clause(self):
+
 
     def __str__(self):
         index = self._linguistic_variable.corresponding_feature.index

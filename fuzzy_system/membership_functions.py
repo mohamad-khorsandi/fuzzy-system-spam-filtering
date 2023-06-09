@@ -19,3 +19,9 @@ def calculate_gaussian(x, m, s):
 def calculate_sigmoid(x, m, s):
     res = 1 / (1 + np.exp(-(x - m) / s))
     return res
+
+
+membership_function_list = [calculate_triangular,
+                            calculate_trapezium,
+                            calculate_gaussian,
+                            calculate_sigmoid]

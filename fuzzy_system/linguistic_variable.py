@@ -4,8 +4,6 @@ from matplotlib import pyplot as plt
 
 from fuzzy_system.enums import Features, SimpleTerms, SignedTerms
 from fuzzy_system.fuzzy_set import FuzzySet
-from fuzzy_system.fuzzy_system_config import fuzzyset_init_sigma, fuzzyset_init_rate, distance_from_centers
-from preprocess_utils import get_data
 
 
 class LinguisticVariable:
@@ -22,11 +20,13 @@ class LinguisticVariable:
     def random_linguistic_variable(cls, feature: Features):
         linguistic_variable = LinguisticVariable(feature)
 
-        tmp = (feature.max_value - feature.min_value) / 6
-        centers = [tmp, 3*tmp, 5*tmp]
-        for i, cen in enumerate(centers):
+        unit = (feature.max_value - feature.min_value) / 6
+        for i in [1, 3, 5]:
             term = list(SimpleTerms)[i]
-            fuzzyset = FuzzySet.random_fuzzyset(feature=feature, term=term, center=cen)
+            l_bound = (i - 1) * unit
+            cen = i * unit
+            u_bound = (i + 1) * unit
+            fuzzyset = FuzzySet.random_fuzzyset(term=term, l_bound=l_bound, center=cen, u_bound=u_bound)
             linguistic_variable._fuzzy_sets.append(fuzzyset)
 
         linguistic_variable._linguistic_terms = random.sample(list(SignedTerms), k=random.randint(3, 5))
@@ -58,3 +58,6 @@ class LinguisticVariable:
                 return fset.membership_function(x)
 
         raise Exception()
+
+    def mut(self):
+
