@@ -1,20 +1,21 @@
 from sklearn.metrics import accuracy_score
+
 from enums import Result
 from rule import Rule
 
 
 class FuzzySystem:
 
-    def __init__(self):
-        self._rules = [Rule]
+    def __init__(self, rules: list[Rule]):
+        self._rules = rules
 
     def add_rule(self, num_of_rules):
         for _ in range(num_of_rules):
             self._rules.append(Rule.random_rule())
 
     def evaluate(self, x_test, y_test):
-        rule_spam = []
-        rule_not_spam = []
+        rule_spam = [Rule]
+        rule_not_spam = [Rule]
         for r in self._rules:
             if r.get_result() == Result.SPAM:
                 rule_spam.append(r)
@@ -37,4 +38,4 @@ class FuzzySystem:
                 y_pred[i] = 0
 
         accuracy = accuracy_score(y_test, y_pred)
-        return y_test, accuracy
+        return y_pred, accuracy
