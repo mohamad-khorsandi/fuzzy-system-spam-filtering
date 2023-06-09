@@ -1,5 +1,7 @@
 import random
 
+import numpy as np
+
 from fuzzy_system.clause import Clause
 from fuzzy_system.enums import Result, Features
 import config

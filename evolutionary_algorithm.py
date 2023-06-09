@@ -39,7 +39,6 @@ class EvolutionaryAlgorithm:
             self.recode_statistics(i)
             parent_pool = parent_selection(self.population, self.parent_pool_size)
             children = []
-            print('pop', [p._result for p in self.population])
             for j in range(0, self.parent_pool_size - 1, 2):
                 p1, p2 = parent_pool[j], parent_pool[j + 1]
                 for rec_result in recombination(p1, p2, self.p_rec):
