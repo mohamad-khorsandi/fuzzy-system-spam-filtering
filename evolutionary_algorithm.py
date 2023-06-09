@@ -11,7 +11,7 @@ from fuzzy_system.rule import Rule
 
 
 class EvolutionaryAlgorithm:
-    def __init__(self, iteration, population_size, parent_pool_size, p_rec, p_mut, mut_step):
+    def __init__(self, iteration, population_size, parent_pool_size, p_rec, p_increase_rate_rec, p_mut, mut_step):
         assert parent_pool_size <= population_size
         assert parent_pool_size % 2 == 0
 
@@ -19,6 +19,7 @@ class EvolutionaryAlgorithm:
         self.population_size = population_size
         self.parent_pool_size = parent_pool_size
         self.p_rec = p_rec
+        self.p_increase_rate_rec = p_increase_rate_rec
         self.p_mut = p_mut
         self.mut_step = mut_step
         self.population = list()

@@ -7,7 +7,7 @@ from preprocess_utils import get_data
 
 def main():
     config.X, config.Y = get_data(False)
-    evolutionary_algorithm = EvolutionaryAlgorithm(5, 10, 6, 0, 0, 2)
+    evolutionary_algorithm = EvolutionaryAlgorithm(5, 10, 6, 0, 0, 0, 2)
     evolutionary_algorithm.run()
     evolutionary_algorithm.show_statistics()
 
@@ -20,5 +20,5 @@ def test_plot():
 
 
 if __name__ == '__main__':
-    pass
+    main()
 

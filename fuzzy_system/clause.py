@@ -49,4 +49,13 @@ class Clause:
 
     def __str__(self):
         index = self._linguistic_variable.corresponding_feature.index
-        return f' x{index+1} is {self._signed_linguistic_term.string}'
+        return f' x{index + 1} is {self._signed_linguistic_term.string}'
+
+    def negative_term(self):
+        term: SignedTerms
+        term = self._signed_linguistic_term
+        negative_index = term.negative_index
+        for signedterm in SignedTerms:
+            if signedterm.index == negative_index:
+                self._signed_linguistic_term = signedterm
+                break

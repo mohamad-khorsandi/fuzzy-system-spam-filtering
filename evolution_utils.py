@@ -35,9 +35,44 @@ def mutation(parent: Rule, p_mut):
     return new_rule
 
 
-def recombination(p1: Rule, p2: Rule, p_rec):
+def recombination(p1: Rule, p2: Rule, p_rec, p_increase_rate_rec):
+    child_result = random.choice(list(Result))
+    child_rule = Rule()
     if not bool_rand(p_rec):
         return p1.copy(), p2.copy()
+    else:
+        for features in Features:
+            clause_p1 = search_feature_in_rule(p1, features.index)
+            clause_p2 = search_feature_in_rule(p2, features.index)
+            if bool_rand(p_increase_rate_rec):
+                if clause_p1 is None and clause_p2 is None:
+                    continue
+                elif clause_p1 is not None and clause_p2 is not None:
+                    tmp_rule = max_CF(p1, p2)
+                    if tmp_rule.get_result() == child_result:
+                        child_rule.add_clause(search_feature_in_rule(tmp_rule, features.index))
+                    else:
+                        tmp_clause: Clause
+                        tmp_clause = search_feature_in_rule(tmp_rule, features.index)
+                        tmp_clause.negative_term()
+                        child_rule.add_clause(tmp_clause)
+
+                elif clause_p1 is None:
+                    if p2.get_result() == child_result:
+                        child_rule.add_clause(clause_p2)
+                    else:
+                        tmp_clause: Clause
+                        tmp_clause = search_feature_in_rule(p2, features.index)
+                        tmp_clause.negative_term()
+                        child_rule.add_clause(tmp_clause)
+                else:
+                    if p1.get_result() == child_result:
+                        child_rule.add_clause(clause_p1)
+                    else:
+                        tmp_clause: Clause
+                        tmp_clause = search_feature_in_rule(p1, features.index)
+                        tmp_clause.negative_term()
+                        child_rule.add_clause(tmp_clause)
 
 
 def _get_weight_list(chromosome_list: list, reverse=False):
@@ -66,3 +101,18 @@ def bool_rand(probTrue):
 def random_result():
     return random.choice(list(Result))
 
+
+def search_feature_in_rule(rule, feature_index):
+    for clause in rule.get_clause_list():
+        if clause.get_feature_index() == feature_index:
+            return clause
+    return None
+
+
+def max_CF(rule1: Rule, rule2: Rule):
+    cf1 = rule1.get_fitness()
+    cf2 = rule2.get_fitness()
+    if cf1 > cf2:
+        return rule1
+    else:
+        return rule2

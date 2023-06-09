@@ -101,3 +101,7 @@ class Rule:
 
     def get_copy_of_random_clause(self):
         return random.choice(self._clause_list).copy()
+
+    def get_clause_list(self):
+        return self._clause_list
+
