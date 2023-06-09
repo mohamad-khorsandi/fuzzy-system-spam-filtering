@@ -1,6 +1,6 @@
 import random
 
-from fuzzy_system.enums import SimpleTerms, SignedTerms
+from fuzzy_system.enums import SignedTerms
 from fuzzy_system.linguistic_variable import LinguisticVariable
 
 
@@ -25,7 +25,7 @@ class Clause:
     @classmethod
     def random_clause(cls, feature):
         variable = LinguisticVariable.random_linguistic_variable(feature)
-        term = variable.get_one_of_terms()
+        term = variable.get_random_signed_term()
         return Clause(var=variable, term=term)
 
     def copy(self):

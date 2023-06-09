@@ -36,8 +36,8 @@ class Rule:
     def _cal_fitness(self):
         positive = 0
         negative = 0
-        X = fuzzy_system_config.X
-        Y = fuzzy_system_config.Y
+        X = config.X
+        Y = config.Y
         for i in range(len(X)):
             if Y[i] == self._result.label:
                 positive += self.matching_rate(X[i])
