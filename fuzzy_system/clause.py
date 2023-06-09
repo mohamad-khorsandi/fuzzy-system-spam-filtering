@@ -17,7 +17,7 @@ class Clause:
         result = self._linguistic_variable.mem_func_of_given_term(term, x)
 
         if self._signed_linguistic_term.is_negative:
-            return -1 * result + 1  # todo is this correct
+            return -1 * result + 1
         else:
             return result
 
