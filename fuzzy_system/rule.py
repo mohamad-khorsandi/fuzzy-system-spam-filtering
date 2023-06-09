@@ -21,7 +21,7 @@ class Rule:
 
         return self._fitness
 
-    def add_clause(self, clause):
+    def add_clause(self, clause: object) -> object:
         self._clause_list.append(clause)
 
     def set_result(self, result):
@@ -88,4 +88,5 @@ class Rule:
     def random_clause_count(cls):
         return random.randint(1, 5)
 
-
+    def get_clause_list(self):
+        return self._clause_list

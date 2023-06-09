@@ -30,15 +30,17 @@ class SimpleTerms(Enum):
 
 
 class SignedTerms(Enum):
-    POSITIVE_LOW = (SimpleTerms.LOW, False, 'low')
-    POSITIVE_MEDIUM = (SimpleTerms.MEDIUM, False, 'medium')
-    POSITIVE_HIGH = (SimpleTerms.HIGH, False, 'high')
+    POSITIVE_LOW = (SimpleTerms.LOW, False, 'low', 3, 0)
+    POSITIVE_MEDIUM = (SimpleTerms.MEDIUM, False, 'medium', 4, 1)
+    POSITIVE_HIGH = (SimpleTerms.HIGH, False, 'high', 5, 2)
 
-    NEGATIVE_LOW = (SimpleTerms.LOW, True, 'not low')
-    NEGATIVE_MEDIUM = (SimpleTerms.MEDIUM, True, 'not medium')
-    NEGATIVE_HIGH = (SimpleTerms.HIGH, True, 'not high')
+    NEGATIVE_LOW = (SimpleTerms.LOW, True, 'not low', 0, 3)
+    NEGATIVE_MEDIUM = (SimpleTerms.MEDIUM, True, 'not medium', 1, 4)
+    NEGATIVE_HIGH = (SimpleTerms.HIGH, True, 'not high', 2, 5)
 
-    def __init__(self, simple_term, is_negative, string):
+    def __init__(self, simple_term, is_negative, string, negative_index, index):
         self.simple_term = simple_term
         self.is_negative = is_negative
         self.string = string
+        self.index = index
+        self.negative_index = negative_index
