@@ -65,7 +65,7 @@ class Rule:
         return new_rule
 
     @classmethod
-    def random_rule(cls):  # todo add some hioristic to random init
+    def random_rule(cls):
         rule = Rule()
         clause_count = Rule.random_clause_count()
         feature_list = random.sample(list(Features), k=clause_count)
@@ -88,4 +88,16 @@ class Rule:
     def random_clause_count(cls):
         return random.randint(1, 5)
 
+    def has_feature(self, f):
+        for c in self._clause_list:
+            if c.get_feature() == f:
+                print(c.get_feature, f)
+                return c, True
 
+        return None, False
+
+    def clause_len(self):
+        return len(self._clause_list)
+
+    def get_copy_of_random_clause(self):
+        return random.choice(self._clause_list).copy()

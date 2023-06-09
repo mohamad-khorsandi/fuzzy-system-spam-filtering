@@ -1,5 +1,7 @@
 import random
 
+import config
+from evolution_utils import bool_rand
 from fuzzy_system.enums import SignedTerms
 from fuzzy_system.linguistic_variable import LinguisticVariable
 
@@ -10,6 +12,9 @@ class Clause:
         self._signed_linguistic_term = term
 
     def get_feature_index(self):
+        return self._linguistic_variable.corresponding_feature.index
+
+    def get_feature(self):
         return self._linguistic_variable.corresponding_feature.index
 
     def term_membership_function(self, x):
@@ -35,7 +40,12 @@ class Clause:
 
     def mut(self):
         var = self._linguistic_variable.mut()
+        term = self._signed_linguistic_term()
 
+        if bool_rand(config.mut_step):
+            term = LinguisticVariable.get_random_signed_term()
+
+        return Clause(var=var, term=term)
 
     def __str__(self):
         index = self._linguistic_variable.corresponding_feature.index
