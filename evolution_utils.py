@@ -1,8 +1,9 @@
 import random
 from random import choices
 
+import config
 from fuzzy_system.clause import Clause
-from fuzzy_system.enums import Result
+from fuzzy_system.enums import Result, Features
 from fuzzy_system.rule import Rule
 
 
@@ -11,26 +12,27 @@ def parent_selection(generation, count):
     return choices(generation, prob_list, k=count)
 
 
-def mutation(parent: Rule, p_mut, mut_step):
-    c = parent.copy()
+def mutation(parent: Rule, p_mut):
     if not bool_rand(p_mut):
-        return c
+        return parent.copy()
 
-    c.result = parent.get_result()
-    result_changed = False
-    if bool_rand(mut_step):
-        c.result = random_result()
-        if c.result != parent.get_result():
-            result_changed = True
+    new_rule = Rule()
+    for feature in Features:
+        parent_clause, has_feature = parent.has_feature(feature)
+        if has_feature:
+            if not bool_rand(config.mut_remove_clause_rate):
+                new_rule.add_clause(parent_clause.mut())
 
-    clause_count = parent.get_clause_count()
-    if bool_rand(mut_step):
-        clause_count = Rule.random_clause_count()
+        elif not has_feature:
+            if bool_rand(config.mut_add_clause_rate):
+                new_clause = Clause.random_clause(feature=feature)
+                new_rule.add_clause(new_clause)
 
-    for i in range(clause_count):
-        clause = Clause()
-        c.add_clause()
+    # avoid having rule with no clause
+    if new_rule.clause_len() == 0:
+        new_rule.add_clause(parent.get_copy_of_random_clause())
 
+    return new_rule
 
 
 def recombination(p1: Rule, p2: Rule, p_rec):
