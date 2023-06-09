@@ -55,4 +55,7 @@ class LinguisticVariable:
         raise Exception()
 
     def mut(self):
-        pass
+        var = LinguisticVariable(self.corresponding_feature)
+        for f_set in self._fuzzy_sets:
+            var._fuzzy_sets.append(f_set.mut())
+        return var

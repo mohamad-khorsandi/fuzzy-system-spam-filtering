@@ -7,7 +7,6 @@ from fuzzy_system.linguistic_variable import LinguisticVariable
 class Clause:
     def __init__(self, var, term):
         self._linguistic_variable = var
-        self._linguistic_term: SignedTerms
         self._signed_linguistic_term = term
 
     def get_feature_index(self):
@@ -34,7 +33,8 @@ class Clause:
         term = self._signed_linguistic_term
         return Clause(var=var, term=term)
 
-    # def mut_clause(self):
+    def mut(self):
+        var = self._linguistic_variable.mut()
 
 
     def __str__(self):

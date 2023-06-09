@@ -23,7 +23,6 @@ def mutation(parent: Rule, p_mut, mut_step):
         if c.result != parent.get_result():
             result_changed = True
 
-
     clause_count = parent.get_clause_count()
     if bool_rand(mut_step):
         clause_count = Rule.random_clause_count()
