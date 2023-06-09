@@ -11,12 +11,24 @@ def parent_selection(generation, count):
 
 
 def mutation(parent: Rule, p_mut, mut_step):
+    c = parent.copy()
     if not bool_rand(p_mut):
-        return parent.copy()
+        return c
 
-    # result = parent.get_result()
-    # if bool_rand(mut_step):
-    #     result = random_result()
+    c.result = parent.get_result()
+    result_changed = False
+    if bool_rand(mut_step):
+        c.result = random_result()
+        if c.result != parent.get_result():
+            result_changed = True
+
+
+    clause_count = parent.get_clause_count()
+    if bool_rand(mut_step):
+        clause_count = Rule.random_clause_count()
+
+    for i in range(clause_count):
+
 
 
 def recombination(p1: Rule, p2: Rule, p_rec):
@@ -49,3 +61,4 @@ def bool_rand(probTrue):
 
 def random_result():
     return random.choice(list(Result))
+

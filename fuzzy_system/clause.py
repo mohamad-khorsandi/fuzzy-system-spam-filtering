@@ -1,18 +1,27 @@
 import random
 
+from fuzzy_system.enums import SimpleTerms, SignedTerms
 from fuzzy_system.linguistic_variable import LinguisticVariable
 
 
 class Clause:
     def __init__(self, var, term):
         self._linguistic_variable = var
-        self._linguistic_term = term
+        self._linguistic_term: SignedTerms
+        assert type(term) == SignedTerms
+        self._signed_linguistic_term = term
 
     def get_feature_index(self):
         return self._linguistic_variable.corresponding_feature.index
 
     def term_membership_function(self, x):
-        return self._linguistic_term.membership_function(x)
+        term = self._signed_linguistic_term.simple_term
+        result = self._linguistic_variable.mem_func_of_given_term(term, x)
+
+        if self._signed_linguistic_term.is_negative:
+            return -1 * result + 1  # todo is this correct
+        else:
+            return result
 
     @classmethod
     def random_clause(cls, feature):
@@ -22,10 +31,10 @@ class Clause:
 
     def copy(self):
         var = self._linguistic_variable.copy()
-        term = self._linguistic_term.copy()
-        assert var is not  None and term is not None
+        assert type(self._signed_linguistic_term) == SignedTerms
+        term = self._signed_linguistic_term
         return Clause(var=var, term=term)
 
     def __str__(self):
         index = self._linguistic_variable.corresponding_feature.index
-        return f'if {index} is {self._linguistic_term}'
+        return f' x{index+1} is {self._signed_linguistic_term.string}'

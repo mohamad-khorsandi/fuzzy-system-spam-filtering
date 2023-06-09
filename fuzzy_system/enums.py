@@ -15,21 +15,30 @@ class Features(Enum):
 
 
 class Result(Enum):
-    SPAM = 1
-    NOT_SPAM = 0
+    SPAM = (0, 'spam')
+    NOT_SPAM = (1, 'not spam')
+
+    def __init__(self, label, string):
+        self.label = label
+        self.string = string
 
 
-class TermName(Enum):
+class SimpleTerms(Enum):
     LOW = 0
     MEDIUM = 1
     HIGH = 2
 
 
-class LinguisticTerms(Enum):
-    POSITIVE_LOW = 0
-    POSITIVE_MEDIUM = 1
-    POSITIVE_HIGH = 2
+class SignedTerms(Enum):
+    POSITIVE_LOW = (SimpleTerms.LOW, False, 'low')
+    POSITIVE_MEDIUM = (SimpleTerms.MEDIUM, False, 'medium')
+    POSITIVE_HIGH = (SimpleTerms.HIGH, False, 'high')
 
-    NEGATIVE_LOW = 3
-    NEGATIVE_MEDIUM = 4
-    NEGATIVE_HIGH = 5
+    NEGATIVE_LOW = (SimpleTerms.LOW, True, 'not low')
+    NEGATIVE_MEDIUM = (SimpleTerms.MEDIUM, True, 'not medium')
+    NEGATIVE_HIGH = (SimpleTerms.HIGH, True, 'not high')
+
+    def __init__(self, simple_term, is_negative, string):
+        self.simple_term = simple_term
+        self.is_negative = is_negative
+        self.string = string

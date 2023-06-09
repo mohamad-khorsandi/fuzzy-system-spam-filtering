@@ -1,2 +1,4 @@
 .idea/*
 /res_dir/
+/venv/*
+SMSSpamCollection

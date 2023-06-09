@@ -3,9 +3,7 @@ import random
 
 from fuzzy_system.clause import Clause
 from fuzzy_system.enums import Result, Features
-from fuzzy_system.fuzzy_set import FuzzySet
 from fuzzy_system import fuzzy_system_config
-from fuzzy_system.linguistic_variable import LinguisticVariable
 
 
 class Rule:
@@ -33,13 +31,16 @@ class Rule:
     def get_result(self):
         return self._result
 
+    def get_clause_count(self):
+        return len(self._clause_list)
+
     def _cal_fitness(self):
         positive = 0
         negative = 0
         X = fuzzy_system_config.X
         Y = fuzzy_system_config.Y
         for i in range(len(X)):
-            if Y[i] == self._result.value:
+            if Y[i] == self._result.label:
                 positive += self.matching_rate(X[i])
             else:
                 negative += self.matching_rate(X[i])
@@ -67,7 +68,7 @@ class Rule:
     @classmethod
     def random_rule(cls):  # todo add some hioristic to random init
         rule = Rule()
-        clause_count = random.randint(1, 5)
+        clause_count = Rule.random_clause_count()
         feature_list = random.sample(list(Features), k=clause_count)
 
         for feature in feature_list:
@@ -78,5 +79,14 @@ class Rule:
         return rule
 
     def __str__(self):
+        res = 'if '
+        for clause in self._clause_list:
+            res += clause.__str__() + ' & '
+
+        return res + f' then sms is {self._result.string}'
+
+    @classmethod
+    def random_clause_count(cls):
+        return random.randint(1, 5)
 
 

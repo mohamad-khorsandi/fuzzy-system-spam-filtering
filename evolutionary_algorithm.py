@@ -62,7 +62,9 @@ class EvolutionaryAlgorithm:
         all_fitness = np.array([c.get_fitness() for c in self.population])
         self.fitness_hist.append(np.mean(all_fitness))
         self.best_hist.append(self.population[all_fitness.argmax()])
-        self.population[all_fitness.argmax()].show()
+        for rule in self.population:
+            print(rule)
+        print(self.population[all_fitness.argmax()])
 
     def survival_selection(self, children):
         tmp_list = self.population + children
@@ -81,7 +83,7 @@ class EvolutionaryAlgorithm:
 
         print('last generation')
         for rule in self.population:
-            rule.show()
-        self.best_hist[self.iteration - 1].show()
+            print(rule)
+        # self.best_hist[self.iteration - 1]
 
 
